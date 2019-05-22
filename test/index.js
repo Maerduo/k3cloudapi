@@ -1,6 +1,6 @@
-const { auth } = require('../src/auth')
-const { list } = require('../src/list')
-const { get } = require('../src/get')
+const auth = require('../src/auth')
+const list = require('../src/list')
+const get = require('../src/get')
 
 auth().then(cookie => {
   const formId = 'BD_Empinfo'
