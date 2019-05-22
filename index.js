@@ -1,9 +1,3 @@
-const auth = require('./src/auth')
-const get = require('./src/get')
-const list = require('./src/list')
+const k3cloudapi = require('./src')
 
-module.exports = {
-  auth,
-  get,
-  list
-}
+module.exports = k3cloudapi
