@@ -1,9 +1,16 @@
-const request = require('../libs/request')
+const axios = require('axios')
 const keysMapping = require('../utils/keysMapping')
 
 module.exports = class K3cloud {
   constructor (config) {
     this.config = config
+    this.request = axios.create({
+      baseURL: config.baseURL,
+      timeout: 15000,
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    })
   }
 
   async auth (username = 'Administrator') {
@@ -14,7 +21,7 @@ module.exports = class K3cloud {
     const { authPath } = config.apis
     const payload = { parameters }
 
-    const { headers, data } = await request.post(authPath, payload)
+    const { headers, data } = await this.request.post(authPath, payload)
     const { IsSuccessByAPI } = data
     if (!IsSuccessByAPI) return null
     if (IsSuccessByAPI) {
@@ -31,7 +38,7 @@ module.exports = class K3cloud {
     const Id = id
     const payload = { formid: FormId, data: { Id } }
     console.log(`service - kingdee get data: ${JSON.stringify(payload)}`)
-    const resp = await request.post(getPath, payload, { headers: { cookie } })
+    const resp = await this.request.post(getPath, payload, { headers: { cookie } })
     const results = resp.data
     return results.Result.Result
   }
@@ -44,7 +51,7 @@ module.exports = class K3cloud {
     const FieldKeys = fieldKeys.join(',')
     const payload = { FormId, data: { FormId, FieldKeys } }
     console.log(`service - kingdee list data: ${JSON.stringify(payload)}`)
-    const resp = await request.post(listPath, payload, { headers: { cookie } })
+    const resp = await this.request.post(listPath, payload, { headers: { cookie } })
     const results = keysMapping(fieldKeys, resp.data)
     return results
   }

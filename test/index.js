@@ -1,6 +1,6 @@
 const K3cloudapi = require('../index')
 
-const config = require('../config')
+const config = require('../config/dev')
 
 const api = new K3cloudapi(config)
 
