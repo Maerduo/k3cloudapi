@@ -1,0 +1,23 @@
+{
+  "name": "k3cloudapi",
+  "version": "1.0.0",
+  "description": "kingdee k3cloud webapi nodejs sdk.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "kingdee",
+    "k3cloud",
+    "webapi",
+    "sdk",
+    "nodejs",
+    "js",
+    "web"
+  ],
+  "author": "vinli",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.18.0"
+  }
+}
