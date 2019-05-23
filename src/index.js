@@ -31,13 +31,12 @@ module.exports = class K3cloud {
     }
   }
 
-  async get ({ cookie, formId, id }) {
+  async get ({ cookie, formId, data }) {
     const config = this.config
-    if (!formId || !id || !cookie) throw new Error('invalid parameters')
+    if (!formId || !cookie) throw new Error('invalid parameters')
     const { getPath } = config.apis
     const FormId = formId
-    const Id = id
-    const payload = { formid: FormId, data: { Id } }
+    const payload = { formid: FormId, data }
     console.log(`service - kingdee get data: ${JSON.stringify(payload)}`)
     const resp = await this.request.post(getPath, payload, { headers: { cookie } })
     const results = resp.data
