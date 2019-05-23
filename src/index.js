@@ -14,6 +14,7 @@ module.exports = class K3cloud {
   }
 
   async auth (username = 'Administrator') {
+    if (!username) console.log('invalid username.')
     const config = this.config
     const { accid, lcid } = config
     const { appid, appsecret } = config.auth

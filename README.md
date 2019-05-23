@@ -2,10 +2,18 @@
 
 kingdee webapi nodejs sdk.
 
+## Usgae
+
+- `$ npm install k3cloudqpi --save`
+
+- 配置信息
+
+  - 配置相关的基础信息
+
+  - 其中`auth`节点需要金蝶k3cloud管理员进入 `系统管理->第三方系统认证->新增` 生成密钥和填写appid和app名称
+
 ```js
-// 配置信息
-// ./config/dev.js
-module.exports = {
+{
   baseURL: 'http://erp.kingdee.com',
   accid: 'it dc id', // 数据中心
   lcid: 2052,
@@ -20,4 +28,33 @@ module.exports = {
     getPath: '/K3Cloud/Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.View.common.kdsvc'
   }
 }
+```
+
+```js
+const K3cloudapi = requrie('k3cloudapi')
+const config = require('config').kingdee // 配置信息参照上面⬆️
+
+const k3cloudapi = new K3cloudapi(config)
+
+k3cloudapi.auth().then(cookie => {
+  // cookie 建议本地缓存 避免每次请求都重新获取
+  const formId = 'BD_Empinfo'         // 表单ID
+  const fieldKeys = ['FID', 'FName']  // 需要返回的字段
+  k3cloudapi.list({ cookie, formId, fieldKeys })
+    .then(r => console.log(r)).catch(e => console.log(e))
+  k3cloudapi.get({ cookie, formId, id: 143494 })
+    .then(r => console.log(r)).catch(e => console.log(e))
+})
+```
+
+```js
+// 支持await
+const K3cloudapi = requrie('k3cloudapi')
+const config = require('config').kingdee // 配置信息参照上面⬆️
+
+const k3cloudapi = new K3cloudapi(config)
+const cookie = await k3cloudapi.auth()
+const formId = 'BD_Empinfo'         // 表单ID
+const fieldKeys = ['FID', 'FName']  // 需要返回的字段
+const results = await k3cloudapi.list({ cookie, formId, fieldKeys })
 ```

@@ -1,4 +1,4 @@
-const config = '' // require(`${process.cwd()}/config`)
+const config = ''
 const request = require('../libs/request')
 // const sha1 = require('sha1')
 
