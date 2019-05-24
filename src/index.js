@@ -43,13 +43,22 @@ module.exports = class K3cloud {
     return results.Result.Result
   }
 
-  async list ({ cookie, formId, fieldKeys }) {
+  async list ({ cookie, formId, fieldKeys, limit, filterString, orderString }) {
     const config = this.config
     if (!formId || !fieldKeys.length || !cookie) throw new Error('invalid parameters')
     const { listPath } = config.apis
     const FormId = formId
     const FieldKeys = fieldKeys.join(',')
-    const payload = { FormId, data: { FormId, FieldKeys } }
+    const payload = {
+      FormId,
+      data: {
+        FormId,
+        FieldKeys,
+        Limit: limit || 0,
+        OrderString: orderString || '',
+        FilterString: filterString || ''
+      }
+    }
     console.log(`service - kingdee list data: ${JSON.stringify(payload)}`)
     const resp = await this.request.post(listPath, payload, { headers: { cookie } })
     const results = keysMapping(fieldKeys, resp.data)
