@@ -1,6 +1,6 @@
 {
   "name": "k3cloudapi",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "kingdee k3cloud webapi nodejs sdk.",
   "main": "index.js",
   "scripts": {
@@ -16,6 +16,13 @@
     "web"
   ],
   "author": "vinli",
+  "email": "yes.heng@icloud.com",
+  "url": "https://cnblackj.github.io/",
+  "homepage": "https://github.com/CNBlackJ/k3cloudapi",
+  "bugs": {
+    "url" : "https://github.com/CNBlackJ/k3cloudapi/issues",
+    "email" : "yes.heng@icloud.com"
+  },
   "license": "ISC",
   "dependencies": {
     "axios": "^0.18.0"

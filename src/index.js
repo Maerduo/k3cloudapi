@@ -33,7 +33,7 @@ module.exports = class K3cloud {
 
   async get ({ cookie, formId, data }) {
     const config = this.config
-    if (!formId || !cookie) throw new Error('invalid parameters')
+    if (!formId || !cookie) throw new Error(`invalid parameters, cookie: ${cookie}; formId: ${formId};`)
     const { getPath } = config.apis
     const FormId = formId
     const payload = { formid: FormId, data }
@@ -63,5 +63,20 @@ module.exports = class K3cloud {
     const resp = await this.request.post(listPath, payload, { headers: { cookie } })
     const results = keysMapping(fieldKeys, resp.data)
     return results
+  }
+
+  async audit ({ cookie, formId, numbers }) {
+    const config = this.config
+    if (!formId || !numbers.length || !cookie) throw new Error('invalid parameters')
+    const { auditPath } = config.apis
+    const FormId = formId
+    const payload = {
+      FormId,
+      data: {
+        Numbers: numbers
+      }
+    }
+    console.log(`service - kingdee audit data: ${JSON.stringify(payload)}`)
+    await this.request.post(auditPath, payload, { headers: { cookie } })
   }
 }

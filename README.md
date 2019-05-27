@@ -2,6 +2,8 @@
 
 kingdee webapi nodejs sdk.
 
+- 项目地址：[github](https://github.com/CNBlackJ/k3cloudapi)
+
 ## Usgae
 
 - `$ npm install k3cloudqpi --save`
@@ -25,7 +27,8 @@ kingdee webapi nodejs sdk.
   apis: {           // webapi
     authPath: '/K3Cloud/Kingdee.BOS.WebApi.ServicesStub.AuthService.LoginByAppSecret.common.kdsvc',
     listPath: '/K3Cloud/Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.ExecuteBillQuery.common.kdsvc',
-    getPath: '/K3Cloud/Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.View.common.kdsvc'
+    getPath: '/K3Cloud/Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.View.common.kdsvc',
+    auditPath: '/K3Cloud/Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.View.common.kdsvc'
   }
 }
 ```
@@ -58,3 +61,13 @@ const formId = 'BD_Empinfo'         // 表单ID
 const fieldKeys = ['FID', 'FName']  // 需要返回的字段
 const results = await k3cloudapi.list({ cookie, formId, fieldKeys })
 ```
+
+## Contact
+
+- Email: yes.heng@icloud.com
+- github: <https://github.com/CNBlackJ>
+
+## Change Log
+
+- 2019-05-27: 添加审核接口
+- 2019-05-23: 权限验证/列表/详情接口
