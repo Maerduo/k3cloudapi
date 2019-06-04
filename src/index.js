@@ -65,18 +65,17 @@ module.exports = class K3cloud {
     return results
   }
 
-  async audit ({ cookie, formId, numbers }) {
+  async audit ({ cookie, formId, data }) {
     const config = this.config
-    if (!formId || !numbers.length || !cookie) throw new Error('invalid parameters')
+    if (!formId || !data || !cookie) throw new Error('invalid parameters')
     const { auditPath } = config.apis
     const FormId = formId
     const payload = {
       FormId,
-      data: {
-        Numbers: numbers
-      }
+      data
     }
     console.log(`service - kingdee audit data: ${JSON.stringify(payload)}`)
-    await this.request.post(auditPath, payload, { headers: { cookie } })
+    const result = await this.request.post(auditPath, payload, { headers: { cookie } })
+    return result
   }
 }
