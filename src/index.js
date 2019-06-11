@@ -43,7 +43,7 @@ module.exports = class K3cloud {
     return results.Result.Result
   }
 
-  async list ({ cookie, formId, fieldKeys, limit, filterString, orderString }) {
+  async list ({ cookie, formId, fieldKeys, limit, skip, filterString, orderString }) {
     const config = this.config
     if (!formId || !fieldKeys.length || !cookie) throw new Error('invalid parameters')
     const { listPath } = config.apis
@@ -55,6 +55,7 @@ module.exports = class K3cloud {
         FormId,
         FieldKeys,
         Limit: limit || 0,
+        StartRow: skip || 0,
         OrderString: orderString || '',
         FilterString: filterString || ''
       }
