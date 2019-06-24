@@ -1,6 +1,6 @@
 {
   "name": "k3cloudapi",
-  "version": "1.0.3",
+  "version": "1.0.5",
   "description": "kingdee k3cloud webapi nodejs sdk.",
   "main": "index.js",
   "scripts": {
