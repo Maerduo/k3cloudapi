@@ -27,7 +27,10 @@ module.exports = class K3cloud {
     if (!IsSuccessByAPI) return null
     if (IsSuccessByAPI) {
       const cookie = headers['set-cookie'] || []
-      return cookie.join(';')
+      return {
+        cookie: cookie.join(';'),
+        data
+      }
     }
   }
 
