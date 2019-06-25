@@ -69,5 +69,6 @@ const results = await k3cloudapi.list({ cookie, formId, fieldKeys })
 
 ## Change Log
 
+- 2019-06-25: 添加审批通过/审批驳回/转发/加签/查看附件列表的接口
 - 2019-05-27: 添加审核接口
 - 2019-05-23: 权限验证/列表/详情接口
