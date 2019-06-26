@@ -91,7 +91,7 @@ module.exports = class K3cloud {
   async approval (options, handle = 'WorkflowSubmitHandle') {
     const isValid = validOptions(options, [ 'isApproval' ])
     if (!isValid) throw new Error(`invalid parameters: ${JSON.stringify(options)}`)
-    const { cookie, formId = '', pkValue = '', receivername = '', disposition = '', isApproval = true, actionName = '' } = options
+    const { cookie, formId = '', pkValue = '', receivername = '', disposition = '', isApproval = true, actionName = '审批同意' } = options
     const config = this.config
     const { approvalPath } = config.apis
     const now = Date.now()
@@ -120,7 +120,7 @@ module.exports = class K3cloud {
     }
     const payload = qs.stringify(dataObj)
     console.log(`service - kingdee approval data: ${JSON.stringify(payload)}`)
-    const result = await this.request.post(approvalPath, payload, { headers: { cookie, 'Content-Type': 'application/x-www-form-urlencoded' } })
+    const result = (await this.request.post(approvalPath, payload, { headers: { cookie, 'Content-Type': 'application/x-www-form-urlencoded' } })).data
     return result
   }
 
@@ -182,7 +182,7 @@ module.exports = class K3cloud {
     }
     const payload = qs.stringify(dataObj)
     console.log(`service - kingdee addSign data: ${JSON.stringify(payload)}`)
-    const result = await this.request.post(addSignPath, payload, { headers: { cookie, 'Content-Type': 'application/x-www-form-urlencoded' } })
+    const result = (await this.request.post(addSignPath, payload, { headers: { cookie, 'Content-Type': 'application/x-www-form-urlencoded' } })).data
     return result
   }
 
@@ -220,7 +220,7 @@ module.exports = class K3cloud {
     }
     const payload = qs.stringify(dataObj)
     console.log(`service - kingdee forward data: ${JSON.stringify(payload)}`)
-    const result = await this.request.post(forwardPath, payload, { headers: { cookie, 'Content-Type': 'application/x-www-form-urlencoded' } })
+    const result = (await this.request.post(forwardPath, payload, { headers: { cookie, 'Content-Type': 'application/x-www-form-urlencoded' } })).data
     return result
   }
 
@@ -255,7 +255,7 @@ module.exports = class K3cloud {
     }
     const payload = qs.stringify(dataObj)
     console.log(`service - kingdee listAttachment data: ${JSON.stringify(payload)}`)
-    const result = await this.request.post(attachmentPath, payload, { headers: { cookie, 'Content-Type': 'application/x-www-form-urlencoded' } })
+    const result = (await this.request.post(attachmentPath, payload, { headers: { cookie, 'Content-Type': 'application/x-www-form-urlencoded' } })).data
     return result
   }
 
@@ -291,7 +291,7 @@ module.exports = class K3cloud {
     }
     const payload = qs.stringify(dataObj)
     console.log(`service - kingdee getApprovalProcess data: ${JSON.stringify(payload)}`)
-    const result = await this.request.post(listPath, payload, { headers: { cookie, 'Content-Type': 'application/x-www-form-urlencoded' } })
+    const result = (await this.request.post(listPath, payload, { headers: { cookie, 'Content-Type': 'application/x-www-form-urlencoded' } })).data
     return result
   }
 }
