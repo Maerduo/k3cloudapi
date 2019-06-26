@@ -225,7 +225,7 @@ module.exports = class K3cloud {
   }
 
   /**
-   * 查看附件列表
+   * 触发附件缓存
    */
   async listAttachment (options) {
     const isValid = validOptions(options)
@@ -260,9 +260,9 @@ module.exports = class K3cloud {
   }
 
   /**
-   * 查看审批流程
+   * list
    */
-  async getApprovalProcess (options) {
+  async listUrlEncode (options) {
     const isValid = validOptions(options)
     if (!isValid) throw new Error(`invalid parameters: ${JSON.stringify(options)}`)
     const { cookie, formId, fieldKeys, limit, skip, filterString, orderString } = options
@@ -291,7 +291,8 @@ module.exports = class K3cloud {
     }
     const payload = qs.stringify(dataObj)
     console.log(`service - kingdee getApprovalProcess data: ${JSON.stringify(payload)}`)
-    const result = (await this.request.post(listPath, payload, { headers: { cookie, 'Content-Type': 'application/x-www-form-urlencoded' } })).data
+    const resp = await this.request.post(listPath, payload, { headers: { cookie, 'Content-Type': 'application/x-www-form-urlencoded' } })
+    const result = keysMapping(fieldKeys, resp.data)
     return result
   }
 }
