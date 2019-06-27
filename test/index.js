@@ -32,10 +32,11 @@ api.auth('王昌鑫').then(async ({ cookie, data }) => {
     cookie,
     formId: 'PJQF_WorkflowOperationAPI',
     fieldKeys: ['FID', 'FName', 'FNumber', 'F_PJQF_Disposition', 'F_PJQF_Result', 'F_PJQF_Status'],
-    filterString: `FID = '196572'`
+    filterString: `FID = '196797'`
   })
   console.log(workFlow)
 
+  // 100045
   // const attachments = await api.listAttachment({ cookie, formId: 'PJQF_Test', pkValue: 100045 })
   // console.log(attachments)
 }).catch(e => console.log(e))
