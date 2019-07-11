@@ -7,8 +7,8 @@ function keysMapping (keys, values) {
       console.log('keysMapping with invalid length.')
     } else {
       keys.forEach((key, i) => (result[key] = value[i]))
+      results.push(result)
     }
-    results.push(result)
   }
   return results
 }
