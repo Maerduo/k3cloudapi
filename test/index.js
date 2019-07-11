@@ -28,20 +28,29 @@ api.auth('王昌鑫').then(async ({ cookie, data }) => {
   //   console.log(err.response.status, err.response.data)
   // })
 
-  const workFlow = await api.listUrlEncode({
+  const operations = await api.listUrlEncode({
     cookie,
     formId: 'PJQF_WorkflowOperationAPI',
     fieldKeys: ['FID', 'FName', 'FNumber', 'F_PJQF_Disposition', 'F_PJQF_Result', 'F_PJQF_Status'],
-    filterString: `FID = '196797'`
+    filterString: `FID = '198027'`
   })
-  console.log(workFlow)
+  console.log(operations)
+
+  // const workFlow = await api.listUrlEncode({
+  //   cookie,
+  //   formId: 'PJQF_WorkFlowRouteAPI',
+  //   fieldKeys: ['FID', 'FActName', 'FTitle', 'FStatus', 'FReceiverNames', 'FObjectTypeId', 'FKeyValue', 'FASSIGNID'],
+  //   // filterString: `FObjectTypeId = 'PJQF_ProjectAndPlanChange'`
+  //   filterString: `FASSIGNID='5c3c9bd2af0299'`
+  // })
+  // console.log(workFlow)
 
   // 100045
   // const attachments = await api.listAttachment({ cookie, formId: 'PJQF_Test', pkValue: 100045 })
   // console.log(attachments)
 }).catch(e => console.log(e))
 
-function getRedirectUrl (username = 'Administrator') {
+function getRedirectUrl (username = 'Administrator') { // 
   const { accid, baseURL, lcid } = config
   const { appid, appsecret } = config.auth
   const timestamp = Date.now().toString().slice(0, 10)
@@ -53,5 +62,5 @@ function getRedirectUrl (username = 'Administrator') {
   return `${baseURL}/K3Cloud/html5/index.aspx?ud=${ud}`
 }
 
-// const url = getRedirectUrl()
-// console.log(url)
+const url = getRedirectUrl()
+console.log(url)
