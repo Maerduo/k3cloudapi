@@ -20,8 +20,9 @@ module.exports = class K3cloud {
     const config = this.config
     const { accid, lcid } = config
     const { appid, appsecret } = config.auth
-    const parameters = [ accid, username, appid, appsecret, lcid ]
+    const parameters = [accid, username, appid, appsecret, lcid]
     const { authPath } = config.apis
+    if (!authPath) throw new Error(`invalid api path: ${authPath}`)
     const payload = { parameters }
 
     const { headers, data } = await this.request.post(authPath, payload)
@@ -52,6 +53,7 @@ module.exports = class K3cloud {
     const config = this.config
     if (!formId || !fieldKeys.length || !cookie) throw new Error('invalid parameters')
     const { listPath } = config.apis
+    if (!listPath) throw new Error(`invalid api path: ${listPath}`)
     const FormId = formId
     const FieldKeys = fieldKeys.join(',')
     const payload = {
@@ -75,6 +77,7 @@ module.exports = class K3cloud {
     const config = this.config
     if (!formId || !data || !cookie) throw new Error('invalid parameters')
     const { auditPath } = config.apis
+    if (!auditPath) throw new Error(`invalid api path: ${auditPath}`)
     const FormId = formId
     const payload = {
       FormId,
@@ -94,6 +97,7 @@ module.exports = class K3cloud {
     const { cookie, formId = '', pkValue = '', receivername = '', disposition = '', isApproval = true, actionName = '审批同意' } = options
     const config = this.config
     const { approvalPath } = config.apis
+    if (!approvalPath) throw new Error(`invalid api path: ${approvalPath}`)
     const now = Date.now()
     const parameters = [
       'PJQF_WorkflowOperationAPI',
@@ -156,6 +160,7 @@ module.exports = class K3cloud {
     } = options
     const config = this.config
     const { addSignPath } = config.apis
+    if (!addSignPath) throw new Error(`invalid api path: ${addSignPath}`)
     const now = Date.now()
     const parameters = [
       'PJQF_WorkflowOperationAPI',
@@ -293,6 +298,51 @@ module.exports = class K3cloud {
     console.log(`service - kingdee getApprovalProcess data: ${JSON.stringify(payload)}`)
     const resp = await this.request.post(listPath, payload, { headers: { cookie, 'Content-Type': 'application/x-www-form-urlencoded' } })
     const result = keysMapping(fieldKeys, resp.data)
+    return result
+  }
+
+  /**
+  * 撤销审批，该接口与加签参数类似
+  */
+  async revoke (options) {
+    const isValid = validOptions(options)
+    if (!isValid) throw new Error(`invalid parameters: ${JSON.stringify(options)}`)
+    const {
+      cookie,
+      formId = '',
+      pkValue = '',
+      receivername = ''
+    } = options
+    const config = this.config
+    const { revokePath } = config.apis
+    if (!revokePath) throw new Error(`invalid api path: ${revokePath}`)
+    const now = Date.now()
+    const parameters = [
+      'PJQF_WorkflowOperationAPI',
+      'WorkflowCancelAssginHandle',
+      {
+        Model: {
+          'F_PJQF_FormId': formId,
+          'F_PJQF_PKValue': pkValue,
+          'F_PJQF_Receivername': receivername,
+          'F_PJQF_AddsignType': 1, // 撤销类型，固定为1
+          'F_PJQF_Disposition': 'api撤销审批', // 撤销备注
+          'F_PJQF_TimeStamp': Date.now(),
+          'F_PJQF_Result': ''
+        }
+      }
+    ]
+    const dataObj = {
+      format: 1,
+      useragent: 'ApiClient',
+      rid: -1760808050,
+      parameters: JSON.stringify(parameters),
+      timestamp: now,
+      v: '1.0'
+    }
+    const payload = qs.stringify(dataObj)
+    console.log(`service - kingdee revoke data: ${JSON.stringify(payload)}`)
+    const result = (await this.request.post(revokePath, payload, { headers: { cookie, 'Content-Type': 'application/x-www-form-urlencoded' } })).data
     return result
   }
 }
