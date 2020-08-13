@@ -28,7 +28,11 @@ kingdee webapi nodejs sdk.
     authPath: '/K3Cloud/Kingdee.BOS.WebApi.ServicesStub.AuthService.LoginByAppSecret.common.kdsvc',
     listPath: '/K3Cloud/Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.ExecuteBillQuery.common.kdsvc',
     getPath: '/K3Cloud/Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.View.common.kdsvc',
-    auditPath: '/K3Cloud/Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.Audit.common.kdsvc'
+    approvalPath: '/K3Cloud/Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.ExcuteOperation.common.kdsvc',
+    forwardPath: '/K3Cloud/Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.ExcuteOperation.common.kdsvc',
+    addSignPath: '/K3Cloud/Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.ExcuteOperation.common.kdsvc',
+    attachmentPath: '/K3Cloud/Kingdee.BOS.WebApi.ServicesStub.DynamicFormService.ExcuteOperation.common.kdsvc',
+    mobileBillDetailPath: '/K3Cloud/SZGD.K3.Business.BillPulgin.WebAPI.MobileViewAPI.ExecuteService,SZGD.K3.Business.BillPulgin.common.kdsvc'
   }
 }
 ```

@@ -4,7 +4,7 @@ const keysMapping = require('../utils/keysMapping')
 const validOptions = require('../utils/validOptions')
 
 module.exports = class K3cloud {
-  constructor (config) {
+  constructor(config) {
     this.config = config
     this.request = axios.create({
       baseURL: config.baseURL,
@@ -15,7 +15,7 @@ module.exports = class K3cloud {
     })
   }
 
-  async auth (username = 'Administrator') {
+  async auth(username = 'Administrator') {
     if (!username) console.log('invalid username.')
     const config = this.config
     const { accid, lcid } = config
@@ -37,7 +37,7 @@ module.exports = class K3cloud {
     }
   }
 
-  async get ({ cookie, formId, data }) {
+  async get({ cookie, formId, data }) {
     const config = this.config
     if (!formId || !cookie) throw new Error(`invalid parameters, cookie: ${cookie}; formId: ${formId};`)
     const { getPath } = config.apis
@@ -49,7 +49,7 @@ module.exports = class K3cloud {
     return results.Result.Result
   }
 
-  async list ({ cookie, formId, fieldKeys, limit, skip, filterString, orderString }) {
+  async list({ cookie, formId, fieldKeys, limit, skip, filterString, orderString }) {
     const config = this.config
     if (!formId || !fieldKeys.length || !cookie) throw new Error('invalid parameters')
     const { listPath } = config.apis
@@ -73,7 +73,7 @@ module.exports = class K3cloud {
     return results
   }
 
-  async audit ({ cookie, formId, data }) {
+  async audit({ cookie, formId, data }) {
     const config = this.config
     if (!formId || !data || !cookie) throw new Error('invalid parameters')
     const { auditPath } = config.apis
@@ -91,8 +91,8 @@ module.exports = class K3cloud {
   /**
    * 审核通过
    */
-  async approval (options, handle = 'WorkflowSubmitHandle') {
-    const isValid = validOptions(options, [ 'isApproval' ])
+  async approval(options, handle = 'WorkflowSubmitHandle') {
+    const isValid = validOptions(options, ['isApproval'])
     if (!isValid) throw new Error(`invalid parameters: ${JSON.stringify(options)}`)
     const { cookie, formId = '', pkValue = '', receivername = '', disposition = '', isApproval = true, actionName = '审批同意' } = options
     const config = this.config
@@ -131,7 +131,7 @@ module.exports = class K3cloud {
   /**
    * 驳回重审
    */
-  async reject (options) {
+  async reject(options) {
     const rejectOptions = {
       ...options,
       ...{
@@ -146,7 +146,7 @@ module.exports = class K3cloud {
   /**
    * 加签
    */
-  async addSign (options) {
+  async addSign(options) {
     const isValid = validOptions(options)
     if (!isValid) throw new Error(`invalid parameters: ${JSON.stringify(options)}`)
     const {
@@ -194,7 +194,7 @@ module.exports = class K3cloud {
   /**
    * 转发
    */
-  async forward (options) {
+  async forward(options) {
     const isValid = validOptions(options)
     if (!isValid) throw new Error(`invalid parameters: ${JSON.stringify(options)}`)
     const { cookie, formId = '', pkValue = '', receivername = '', disposition = '', receiverIds = [] } = options
@@ -232,7 +232,7 @@ module.exports = class K3cloud {
   /**
    * 触发附件缓存
    */
-  async listAttachment (options) {
+  async listAttachment(options) {
     const isValid = validOptions(options)
     if (!isValid) throw new Error(`invalid parameters: ${JSON.stringify(options)}`)
     const { cookie, formId, pkValue } = options
@@ -265,9 +265,40 @@ module.exports = class K3cloud {
   }
 
   /**
+   * getMobileBill
+   * options
+   * @param {formId} string
+   * @param {id} string 
+   */
+  async getMobileBill(options) {
+    const isValid = validOptions(options)
+    if (!isValid) throw new Error(`invalid parameters: ${JSON.stringify(options)}`)
+    const { cookie, formId, id } = options
+    const config = this.config
+    const { mobileBillDetailPath } = config.apis
+    const now = Date.now()
+    const parameters = [{
+      FormID: formId,
+      FID: id
+    }]
+    const dataObj = {
+      format: 1,
+      useragent: 'ApiClient',
+      rid: -1760808050,
+      parameters: JSON.stringify(parameters),
+      timestamp: now,
+      v: '1.0'
+    }
+    const payload = qs.stringify(dataObj)
+    console.log(`service - kingdee getMobileBill data: ${JSON.stringify(payload)}`)
+    const resp = await this.request.post(mobileBillDetailPath, payload, { headers: { cookie, 'Content-Type': 'application/x-www-form-urlencoded' } })
+    return resp.data
+  }
+
+  /**
    * list
    */
-  async listUrlEncode (options) {
+  async listUrlEncode(options) {
     const isValid = validOptions(options)
     if (!isValid) throw new Error(`invalid parameters: ${JSON.stringify(options)}`)
     const { cookie, formId, fieldKeys, limit, skip, filterString, orderString } = options
@@ -304,7 +335,7 @@ module.exports = class K3cloud {
   /**
   * 撤销审批，该接口与加签参数类似
   */
-  async revoke (options) {
+  async revoke(options) {
     const isValid = validOptions(options)
     if (!isValid) throw new Error(`invalid parameters: ${JSON.stringify(options)}`)
     const {
